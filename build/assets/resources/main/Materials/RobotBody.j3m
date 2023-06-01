@@ -1,0 +1,15 @@
+Material My Material : Common/MatDefs/Light/Lighting.j3md {
+     MaterialParameters {
+        BackfaceShadows : false
+        ParallaxHeight : 0.05
+        Specular : 1.0 1.0 1.0 1.0
+        HardwareShadows : true
+        Shininess : 1
+        Diffuse : 0.4 0.0 0.4 1.0
+        Ambient : 0.2 0.0 0.2 1.0
+        ShadowMapSize : 2048.0
+        UseMaterialColors : true
+     }
+    AdditionalRenderState {
+    }
+}
