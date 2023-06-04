@@ -184,7 +184,7 @@ public class RobotGameGraphics {
         ball_geo.setLocalTranslation(pos);
         /* Make the ball physical with a mass > 0.0f */
         //RigidBodyControl ball_phy = new RigidBodyControl(1f);
-        rubberBall ball_phy = new rubberBall(1f);
+        rubberBall ball_phy = new rubberBall(1f,teamAlliance);
         /** Add physical ball to physics space. */
         ball_geo.addControl(ball_phy);
         ball_phy.setRestitution(0.9f);

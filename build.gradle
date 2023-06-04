@@ -50,8 +50,7 @@ dependencies {
   implementation "org.jmonkeyengine:jme3-plugins:$jmeVer"
   
   // GUI Library
-  implementation "com.simsilica:lemur:1.16.0"
-  
+
   // Physics Library
   implementation "org.jmonkeyengine:jme3-jbullet:$jmeVer"
   
@@ -61,6 +60,11 @@ dependencies {
   // Additional Libraries
   implementation "org.jmonkeyengine:jme3-effects:$jmeVer"
   implementation "com.epagagames:particlemonkey:1.1.0"
+  
+    implementation "com.simsilica:lemur:1.16.0"
+    implementation "com.simsilica:lemur-proto:1.12.0"
+
+
 
 
   // Assets sub-project
