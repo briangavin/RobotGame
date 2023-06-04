@@ -54,7 +54,8 @@ public class Main extends SimpleApplication implements ActionListener {
        
         stateManager.attach(m_bulletAppState);
        
-        m_bulletAppState.setDebugEnabled(true);
+        // Enable to see all physics boxes
+        //m_bulletAppState.setDebugEnabled(true);
         setupKeys();
         
         m_GameGraphics = new RobotGameGraphics();
