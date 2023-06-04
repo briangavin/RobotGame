@@ -44,13 +44,45 @@ public class RobotGameGraphics {
         m_listFieldBalls = new ArrayList<rubberBall> ();
     }
     // Add things such as sunlight, shadows and SSAO
-    public void createEnviroment(SimpleApplication app) {
+    public void createEnviromentLowQuality(SimpleApplication app) {
         DirectionalLight sun = new DirectionalLight();
         sun.setColor(ColorRGBA.White);
         sun.setDirection(new Vector3f(-.5f,-.5f,-.5f).normalizeLocal());
         app.getRootNode().addLight(sun);
         
         
+        DirectionalLightShadowRenderer dlsr = new DirectionalLightShadowRenderer(app.getAssetManager(), 2048, 1);
+        dlsr.setLight(sun);
+        dlsr.setLambda(0.55f);
+        dlsr.setShadowIntensity(0.8f);
+        dlsr.setEdgeFilteringMode(EdgeFilteringMode.Bilinear);
+        //dlsr.displayDebug();
+        app.getViewPort().addProcessor(dlsr);
+
+        DirectionalLightShadowFilter dlsf = new DirectionalLightShadowFilter(app.getAssetManager(), 2048, 1);
+        dlsf.setLight(sun);
+        dlsf.setLambda(0.55f);
+        dlsf.setShadowIntensity(0.8f);
+        dlsf.setEdgeFilteringMode(EdgeFilteringMode.Bilinear);
+        dlsf.setEnabled(false);
+
+        FilterPostProcessor fpp = new FilterPostProcessor(app.getAssetManager());
+        fpp.addFilter(dlsf);
+
+        app.getViewPort().addProcessor(fpp);
+
+               
+
+    }
+
+    // Add things such as sunlight, shadows and SSAO
+    public void createEnviromentHighQuality(SimpleApplication app) {
+        DirectionalLight sun = new DirectionalLight();
+        sun.setColor(ColorRGBA.White);
+        sun.setDirection(new Vector3f(-.5f,-.5f,-.5f).normalizeLocal());
+        app.getRootNode().addLight(sun);
+        
+
         DirectionalLightShadowRenderer dlsr = new DirectionalLightShadowRenderer(app.getAssetManager(), 4096, 1);
         dlsr.setLight(sun);
         dlsr.setLambda(0.55f);
@@ -76,7 +108,7 @@ public class RobotGameGraphics {
         SSAOFilter ssaoFilter = new SSAOFilter(3.94f, 13.92f, 0.33f, 0.61f);
         fpp2.addFilter(ssaoFilter);
         app.getViewPort().addProcessor(fpp2);
-        
+
 
     }
 

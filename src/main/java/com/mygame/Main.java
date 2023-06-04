@@ -53,12 +53,13 @@ public class Main extends SimpleApplication implements ActionListener {
         m_bulletAppState = new BulletAppState();
        
         stateManager.attach(m_bulletAppState);
-        //bulletAppState.setDebugEnabled(true);
+       
+        m_bulletAppState.setDebugEnabled(true);
         setupKeys();
         
         m_GameGraphics = new RobotGameGraphics();
         m_GameGraphics.createField(this, getPhysicsSpace(),120.0f,80.0f,10.0f);
-        m_GameGraphics.createEnviroment(this);
+        m_GameGraphics.createEnviromentLowQuality(this);
         
         m_RobotCyber = new Robot(this, getPhysicsSpace(), new Vector3f(0,0,-30),0.0f, Alliance.BLUE);
         m_RobotBudget = new Robot(this, getPhysicsSpace(), new Vector3f(0,0,30),FastMath.PI, Alliance.RED);

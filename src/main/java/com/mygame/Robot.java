@@ -65,11 +65,16 @@ public class Robot {
         //create a compound shape and attach the BoxCollisionShape for the car body at 0,1,0
         //this shifts the effective center of mass of the BoxCollisionShape to 0,-1,0
         CompoundCollisionShape compoundShape = new CompoundCollisionShape();
+        /*
+        // More detailed physics but runs slow on older computers
         BoxCollisionShape box = new BoxCollisionShape(new Vector3f(3.75f, 1.0f, 3.75f));
         compoundShape.addChildShape(box, new Vector3f(0, groundClearance, 0));
 
         BoxCollisionShape box2 = new BoxCollisionShape(new Vector3f(2.75f, 4.0f, 2.75f));
         compoundShape.addChildShape(box2, new Vector3f(0, groundClearance+5.0f, 0));
+        */
+        BoxCollisionShape box = new BoxCollisionShape(new Vector3f(3.75f, 5.0f, 3.75f));
+        compoundShape.addChildShape(box, new Vector3f(0, groundClearance+4.0f, 0));
 
 
         Cylinder robotIntake = new Cylinder(20,20,0.5f,6.5f,true);
@@ -90,7 +95,7 @@ public class Robot {
         m_vehicleControl = new VehicleControl(compoundShape, 400);
         
         CompoundCollisionShape compoundShape2 = new CompoundCollisionShape();
-        BoxCollisionShape intakeBox2 = new BoxCollisionShape(new Vector3f(3.5f, 2.0f, 1.0f));
+        BoxCollisionShape intakeBox2 = new BoxCollisionShape(new Vector3f(3.0f, 2.0f, 1.0f));
         compoundShape2.addChildShape(intakeBox2, new Vector3f(0.0f, 1.75f, 5.0f));      
         m_ghost = new GhostControl(compoundShape2);
         m_vehicleNode.addControl(m_ghost);
