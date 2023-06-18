@@ -64,11 +64,18 @@ dependencies {
     implementation "com.simsilica:lemur:1.16.0"
     implementation "com.simsilica:lemur-proto:1.12.0"
 
-
-
-
   // Assets sub-project
   runtimeOnly project(':assets')
+  
+    // needed for the style language
+    runtimeOnly  "org.codehaus.groovy:groovy-all:3.0.8"
+
+    // Standard utility stuff
+    implementation 'com.google.guava:guava:19.0'
+    implementation 'org.slf4j:slf4j-api:1.7.13'
+    runtimeOnly  'org.apache.logging.log4j:log4j-slf4j-impl:2.5'
+    runtimeOnly  'org.apache.logging.log4j:log4j-core:2.5'    
+
 }
 
 jar {

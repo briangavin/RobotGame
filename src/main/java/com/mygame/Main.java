@@ -28,6 +28,8 @@ public class Main extends SimpleApplication implements ActionListener {
     private Robot m_RobotCyber;
     private Robot m_RobotBudget;
     
+    private static AppSettings m_appSettings;
+    
     private RobotGameGraphics m_GameGraphics;
 
     public static void main(String[] args) {
@@ -39,13 +41,13 @@ public class Main extends SimpleApplication implements ActionListener {
     }
     
     static AppSettings createGameSettings(){
-        AppSettings settings = new AppSettings(true);
-        settings.setFullscreen(false);
-        settings.setSamples(2);
-        settings.setWidth(1920);
-        settings.setHeight(1080);
+        m_appSettings = new AppSettings(true);
+        m_appSettings.setFullscreen(false);
+        m_appSettings.setSamples(2);
+        m_appSettings.setWidth(1920);
+        m_appSettings.setHeight(1080);
         
-        return settings;
+        return m_appSettings;
     }
 
     @Override
@@ -69,7 +71,40 @@ public class Main extends SimpleApplication implements ActionListener {
         Vector3f loc2 = new Vector3f(-50.0f,30.0f,0.0f);
         this.cam.setLocation(loc2);
         cam.lookAt(loc,Vector3f.UNIT_Y);
+        
+        makeGUI();
 
+    }
+    
+    private void makeGUI()
+    {
+    // Initialize the globals access so that the defualt
+        // components can find what they need.
+        GuiGlobals.initialize(this);
+            
+        // Load the 'glass' style
+        BaseStyles.loadGlassStyle();
+            
+        // Set 'glass' as the default style when not specified
+        GuiGlobals.getInstance().getStyles().setDefaultStyle("glass");
+    
+        // Create a simple container for our elements
+        Container myWindow = new Container();
+        guiNode.attachChild(myWindow);
+            
+        // Put it somewhere that we will see it
+        // Note: Lemur GUI elements grow down from the upper left corner.
+        myWindow.setLocalTranslation(300, 50, 0);
+    
+        // Add some elements
+        Button clickMe = myWindow.addChild(new Button("Settings"));
+        clickMe.addClickCommands(new Command<Button>() {
+                @Override
+                public void execute( Button source ) {
+                    System.out.println("The world is yours.");
+                }
+            });            
+   
     }
 
     private PhysicsSpace getPhysicsSpace(){
