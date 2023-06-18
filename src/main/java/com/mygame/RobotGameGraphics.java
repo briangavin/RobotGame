@@ -50,7 +50,7 @@ public class RobotGameGraphics {
         sun.setDirection(new Vector3f(-.5f,-.5f,-.5f).normalizeLocal());
         app.getRootNode().addLight(sun);
         
-        
+        /*
         DirectionalLightShadowRenderer dlsr = new DirectionalLightShadowRenderer(app.getAssetManager(), 2048, 1);
         dlsr.setLight(sun);
         dlsr.setLambda(0.55f);
@@ -70,7 +70,7 @@ public class RobotGameGraphics {
         fpp.addFilter(dlsf);
 
         app.getViewPort().addProcessor(fpp);
-
+*/
                
 
     }
