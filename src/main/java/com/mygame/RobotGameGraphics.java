@@ -83,7 +83,7 @@ public class RobotGameGraphics {
         app.getRootNode().addLight(sun);
         
 
-        DirectionalLightShadowRenderer dlsr = new DirectionalLightShadowRenderer(app.getAssetManager(), 4096, 1);
+        DirectionalLightShadowRenderer dlsr = new DirectionalLightShadowRenderer(app.getAssetManager(), 4096*2, 1);
         dlsr.setLight(sun);
         dlsr.setLambda(0.55f);
         dlsr.setShadowIntensity(0.8f);
@@ -91,7 +91,7 @@ public class RobotGameGraphics {
         //dlsr.displayDebug();
         app.getViewPort().addProcessor(dlsr);
 
-        DirectionalLightShadowFilter dlsf = new DirectionalLightShadowFilter(app.getAssetManager(), 4096, 1);
+        DirectionalLightShadowFilter dlsf = new DirectionalLightShadowFilter(app.getAssetManager(), 4096*2, 1);
         dlsf.setLight(sun);
         dlsf.setLambda(0.55f);
         dlsf.setShadowIntensity(0.8f);

@@ -17,11 +17,16 @@ import com.simsilica.lemur.Container;
 import com.simsilica.lemur.GuiGlobals;
 import com.simsilica.lemur.Label;
 import com.simsilica.lemur.style.BaseStyles;
+import java.awt.DisplayMode;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.util.Arrays;
 
 
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.BackingStoreException;
 
 
 public class Main extends SimpleApplication implements ActionListener {
@@ -35,7 +40,6 @@ public class Main extends SimpleApplication implements ActionListener {
     private Robot m_RobotCyber;
     private Robot m_RobotBudget;
     
-    private static AppSettings m_appSettings;
     
     private RobotGameGraphics m_GameGraphics;
     private GUIManager m_GUIManager;
@@ -45,6 +49,7 @@ public class Main extends SimpleApplication implements ActionListener {
         Main app = new Main();
         
         m_cpuCount = Runtime.getRuntime().availableProcessors();
+                
         app.setSettings(createGameSettings());
         app.setDisplayStatView(false);
         app.start();
@@ -53,20 +58,30 @@ public class Main extends SimpleApplication implements ActionListener {
     
     static AppSettings createGameSettings(){
         
-        m_appSettings = new AppSettings(true);
-        m_appSettings.setFullscreen(false);
-        m_appSettings.setSamples(2);
-        m_appSettings.setWidth(1280);
-        m_appSettings.setHeight(720);
+        AppSettings settings = new AppSettings(true);
+        settings.setFullscreen(false);
+        settings.setSamples(2);
+        settings.setWidth(1280);
+        settings.setHeight(720);
+        settings.setVSync(true);
+        try{
+            settings.load("RobotSettings");
+        }
+        catch(BackingStoreException e)
+        {
+            //ignore just use default settings
+        }
         
-        return m_appSettings;
+        
+        return settings;
     }
 
     @Override
     public void simpleInitApp() {
-        Collection<Caps> caps = renderer.getCaps();
-       // Logger.getLogger(Main.class.getName()).log(Level.INFO, "Caps: {0}", caps.toString());
         
+        GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        DisplayMode[] modes = device.getDisplayModes();
+        System.out.println(Arrays.toString(modes));
         m_bulletAppState = new BulletAppState();
        
         stateManager.attach(m_bulletAppState);
@@ -94,7 +109,8 @@ public class Main extends SimpleApplication implements ActionListener {
         cam.lookAt(loc,Vector3f.UNIT_Y);
         
         m_GUIManager = new GUIManager(this);
-        m_GUIManager.makeStartMenu(this);
+        m_GUIManager.activateMainMenu(this);
+        //m_GUIManager.activateSettingsMenu(this);
 
     }
 
