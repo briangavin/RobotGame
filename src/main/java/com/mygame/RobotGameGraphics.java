@@ -206,7 +206,7 @@ public class RobotGameGraphics {
         Sphere sphere = new Sphere(32, 32, 1.4f, true, false);
         sphere.setTextureMode(TextureMode.Projected);
         /** Create a cannon ball geometry and attach to scene graph. */
-        Geometry ball_geo = new Geometry("cannon ball", sphere);
+        Geometry ball_geo = new Geometry("rubber ball", sphere);
         ball_geo.setShadowMode(ShadowMode.CastAndReceive);
 
         ball_geo.setMaterial(ballMat);
@@ -219,12 +219,10 @@ public class RobotGameGraphics {
         rubberBall ball_phy = new rubberBall(1f,teamAlliance);
         /** Add physical ball to physics space. */
         ball_geo.addControl(ball_phy);
+        
         ball_phy.setRestitution(0.9f);
         ball_phy.setFriction(0.3f);
-        if( teamAlliance == Alliance.RED)
-            ball_phy.setCollisionGroup(3);
-        else
-            ball_phy.setCollisionGroup(4);
+        ball_phy.setCollisionGroup(3);
 
 
 

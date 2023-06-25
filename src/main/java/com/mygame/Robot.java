@@ -31,9 +31,13 @@ public class Robot {
     VehicleControl m_vehicleControl;
     Node m_vehicleNode;
     GhostControl m_ghost;
+    rubberBall m_storageShootSpot;
+    rubberBall m_ballStorageSpot;
+    double m_shootAngle;
     
     Robot(SimpleApplication app, PhysicsSpace physicsSpace, Vector3f position, double rotation, Alliance teamAlliance){
         createRobot(app, physicsSpace, position, rotation, teamAlliance);
+        m_shootAngle = 1.57/2.0;
         
     }
         VehicleControl GetVehicleControl(){return m_vehicleControl;}
@@ -207,15 +211,51 @@ public class Robot {
 
         physicsSpace.add(m_vehicleControl);
         
-        /*
-        RigidBodyControl ball = createBasketBall(app,null,new Vector3f(0.0f,12.0f,0.0f),vehicleNode);
-        ball.setEnabled(false);
-        vehicleNode.addControl(ball);
-        
-        return vehicle;
-*/
     }        
+    
+    private boolean storeBallInRobot(rubberBall ball)
+    {
+        m_vehicleNode.attachChild(ball.getSpatial());
+        if(this.m_storageShootSpot == null )
+        {
+            m_storageShootSpot = ball;
+            ball.getSpatial().setLocalTranslation(0, 11.75f, -2);
+            return true;
+        }
+        else if( this.m_ballStorageSpot == null )
+        {
+            m_ballStorageSpot = ball;
+            ball.getSpatial().setLocalTranslation(0, 11.75f, 2);
+            return true;
+        }
+       
+        System.out.println("ball storage overloaded");
         
+        // No room to store balls
+        return false;
+    }
+    
+    public void shootBall( double power )
+    {
+        if( m_storageShootSpot != null)
+        {
+            rubberBall shootingball = m_storageShootSpot;
+            m_storageShootSpot = m_ballStorageSpot;
+            m_ballStorageSpot = null;
+            if(m_storageShootSpot!= null)
+                m_storageShootSpot.getSpatial().setLocalTranslation(0, 11.75f, -2);
+            
+            Vector3f pos = shootingball.getSpatial().getWorldTranslation();
+   //         shootingball.getSpatial().removeFromParent();
+    //        shootingball.getSpatial().setLocalTranslation(pos);
+            shootingball.setEnabled(true);
+            
+            shootingball.setLinearVelocity(new Vector3f(0.0f,8.0f,1.0f));
+            
+            
+        }
+    }
+    
     public void simpleUpdate(float tpf)
     {
         if( m_ghost.getOverlappingCount()>2 )
@@ -223,13 +263,12 @@ public class Robot {
             List<PhysicsCollisionObject> items = m_ghost.getOverlappingObjects();
             for (PhysicsCollisionObject obj: items)
             {
-                if( obj.getCollisionGroup() == 3)
+                if( obj instanceof rubberBall ball)
                 {
-                    System.out.println("Red ball collision");
-                }
-                else if(obj.getCollisionGroup() == 3)
-                {
-                    System.out.println("Ball ball collision");
+                    if(storeBallInRobot(ball))
+                    {
+                        ball.putBallInRobot(this);
+                    }
                 }
             }
 

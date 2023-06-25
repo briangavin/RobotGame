@@ -5,6 +5,7 @@
 package com.mygame;
 
 import com.jme3.bullet.control.RigidBodyControl;
+import com.jme3.scene.Geometry;
 
 /**
  *
@@ -12,10 +13,21 @@ import com.jme3.bullet.control.RigidBodyControl;
  */
 public class rubberBall extends RigidBodyControl {
         private Alliance m_allianceTeam;
-        public rubberBall(float mass, Alliance allianceTeam) {
+        
+        public rubberBall(float mass, Alliance allianceTeam ) {
         super(mass);
         m_allianceTeam = allianceTeam;
-
+        }
+     
+        
+        public void putBallInRobot(Robot robot)
+        {
+            // Disable ball physics it is inside the robot
+            this.setEnabled(false);
+        }
+        
+        public Alliance getAlliance(){
+            return m_allianceTeam;
         }
         
 }

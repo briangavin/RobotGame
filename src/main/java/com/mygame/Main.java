@@ -94,7 +94,8 @@ public class Main extends SimpleApplication implements ActionListener {
         m_GameGraphics = new RobotGameGraphics();
         m_GameGraphics.createField(this, getPhysicsSpace(),120.0f,80.0f,10.0f);
        
-       if(m_cpuCount < 4) 
+        System.out.println("CPU count=>"+m_cpuCount);
+       if(m_cpuCount < 5) 
            m_GameGraphics.createEnviromentLowQuality(this);
        else
            m_GameGraphics.createEnviromentHighQuality(this);
@@ -123,6 +124,7 @@ public class Main extends SimpleApplication implements ActionListener {
         inputManager.addMapping("Rights", new KeyTrigger(KeyInput.KEY_D));
         inputManager.addMapping("Ups", new KeyTrigger(KeyInput.KEY_W));
         inputManager.addMapping("Downs", new KeyTrigger(KeyInput.KEY_S));
+        inputManager.addMapping("Shoot", new KeyTrigger(KeyInput.KEY_Z));
         inputManager.addMapping("Space", new KeyTrigger(KeyInput.KEY_SPACE));
         inputManager.addMapping("Reset", new KeyTrigger(KeyInput.KEY_RETURN));
         inputManager.addListener(this, "Lefts");
@@ -131,6 +133,7 @@ public class Main extends SimpleApplication implements ActionListener {
         inputManager.addListener(this, "Downs");
         inputManager.addListener(this, "Space");
         inputManager.addListener(this, "Reset");
+        inputManager.addListener(this,"Shoot");
     }
 
 
@@ -191,7 +194,12 @@ public class Main extends SimpleApplication implements ActionListener {
             if (value) {
                 m_RobotCyber.GetVehicleControl().applyImpulse(jumpForce, Vector3f.ZERO);
             }
-        } else if (binding.equals("Reset")) {
+        }
+        else if( binding.equals("Shoot")){
+            System.out.println("Shooting ball");
+            m_RobotCyber.shootBall(10.0);
+        }
+        else if (binding.equals("Reset")) {
             if (value) {
                 System.out.println("Reset");
                 m_RobotCyber.GetVehicleControl().setPhysicsLocation(Vector3f.ZERO);
